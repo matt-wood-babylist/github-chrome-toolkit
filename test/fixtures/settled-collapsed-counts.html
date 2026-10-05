@@ -1,0 +1,189 @@
+<!--
+  Trimmed from a live GitHub merge box (2026-08-05). Org and the third-party
+  review host are scrubbed; structure and attributes are verbatim.
+
+  Deliberately keeps the real header counts (20 skipped, 25 successful) while
+  including only a handful of <li> rows. That mismatch IS the test: a parser
+  that counts rows instead of reading the group header button gets this wrong,
+  and so would silently undercount any collapsed group on a real PR.
+-->
+<div data-testid="mergebox-border-container" class="border rounded-2 borderColor-default">
+  <section aria-label="Reviews" aria-describedby="_r_2_" class="border-bottom color-border-subtle">
+    <div class="MergeBoxSectionHeader-module__wrapper___70DU">
+      <h3 class="prc-Heading-Heading-MtWFE" data-component="Heading" id="_r_2_">Review required</h3>
+      <p class="fgColor-muted mb-0">At least 1 approving review is required by reviewers with write access.</p>
+    </div>
+    <button
+      data-component="Button"
+      type="button"
+      aria-controls="_r_3_"
+      aria-expanded="false"
+      aria-label="Expand 1 pending review group"
+      class="prc-Button-ButtonBase-9n-Xk ReviewGroupExpander-module__groupHeadingButton__DNTCF"
+    >
+      <span data-component="text" class="prc-Button-Label-FWkx3">
+        <svg class="octicon octicon-person"></svg>
+        <span class="ml-1">1 pending review</span>
+      </span>
+    </button>
+    <div class="ReviewGroupExpander-module__expandableWrapper__jNKdT" id="_r_3_" aria-label="1 pending review" role="group">
+      <!-- Collapsed: GitHub renders no rows at all. -->
+      <div class="ReviewGroupExpander-module__expandableListView__Y3SS3"></div>
+    </div>
+  </section>
+
+  <section aria-label="Checks" aria-describedby="_r_5_" class="border-bottom color-border-subtle">
+    <div class="MergeBoxSectionHeader-module__wrapper___70DU">
+      <h3 class="prc-Heading-Heading-MtWFE" data-component="Heading" id="_r_5_">All checks have passed</h3>
+      <p class="fgColor-muted mb-0">20 skipped, 25 successful checks</p>
+    </div>
+
+    <div>
+      <div class="ExpandedChecks-module__groupHeader__BcP6u">
+        <button
+          data-component="Button"
+          type="button"
+          aria-controls="_r_c_"
+          aria-expanded="true"
+          aria-label="Collapse 20 skipped checks group"
+          data-action="collapse_checks_group"
+          class="prc-Button-ButtonBase-9n-Xk"
+        >
+          <span data-component="text" class="prc-Button-Label-FWkx3">20 skipped checks</span>
+        </button>
+      </div>
+      <div class="ExpandedChecks-module__expandableWrapper__vAy7Q" id="_r_c_" aria-label="skipped checks" role="group">
+        <ul class="ListView-module__ul__uMK30" role="list">
+          <li
+            id="_r_j_-list-view-node-_r_k_"
+            class="ListItem-module__listItem__wBJcm"
+            aria-label="Check Migrations / Check Migrations (pull_request_review) skipped"
+          >
+            <span style="color: var(--fgColor-muted);"><svg class="octicon octicon-skip"></svg></span>
+            <img
+              data-component="Avatar"
+              alt="Check Migrations / Check Migrations (pull_request_review)"
+              data-testid="github-avatar"
+              src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4"
+            />
+            <div class="Title-module__container__ZzhV_">
+              <h4 class="Title-module__heading__tHuYV">
+                <a
+                  class="Title-module__anchor__dBbYy"
+                  href="/acme/web/actions/runs/10000000026/job/10000000027?pr=1200"
+                  data-action="view_check_details"
+                  tabindex="-1"
+                >
+                  <span>Check Migrations / Check Migrations (pull_request_review)</span>
+                </a>
+              </h4>
+              <span class="StatusCheckRow-module__titleDescription__uQ3cm">
+                <span>
+                  Skipped
+                  <relative-time data-component="RelativeTime" datetime="2026-08-05T13:49:25.000Z">
+                    <template shadowrootmode="open"><span part="root">6 minutes ago</span></template>
+                    Aug 5, 2026
+                  </relative-time>
+                </span>
+              </span>
+            </div>
+            <div class="Metadata-module__metadata__ocr9n">
+              <span class="prc-Label-Label-qG-Zu" data-component="Label">Required</span>
+            </div>
+          </li>
+          <li
+            class="ListItem-module__listItem__wBJcm"
+            aria-label="Tests / Jest (pull_request) skipped"
+          >
+            <span style="color: var(--fgColor-muted);"><svg class="octicon octicon-skip"></svg></span>
+            <img data-testid="github-avatar" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4>
+                <a href="/acme/web/actions/runs/10000000002/job/10000000028?pr=1200" data-action="view_check_details">
+                  <span>Tests / Jest (pull_request)</span>
+                </a>
+              </h4>
+              <span><span>Skipped</span></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="ExpandedChecks-module__groupHeader__BcP6u">
+        <button
+          data-component="Button"
+          type="button"
+          aria-controls="_r_4c_"
+          aria-expanded="true"
+          aria-label="Collapse 25 successful checks group"
+          data-action="collapse_checks_group"
+          class="prc-Button-ButtonBase-9n-Xk"
+        >
+          <span data-component="text" class="prc-Button-Label-FWkx3">25 successful checks</span>
+        </button>
+      </div>
+      <div class="ExpandedChecks-module__expandableWrapper__vAy7Q" id="_r_4c_" aria-label="successful checks" role="group">
+        <ul class="ListView-module__ul__uMK30" role="list">
+          <li
+            class="ListItem-module__listItem__wBJcm"
+            aria-label="Label Check / check-label / require-labels (pull_request) successful in 7s"
+          >
+            <span style="color: var(--fgColor-success);"><svg class="octicon octicon-check"></svg></span>
+            <img data-testid="github-avatar" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4>
+                <a href="/acme/web/actions/runs/10000000029/job/10000000030?pr=1200" data-action="view_check_details">
+                  <span>Label Check / check-label / require-labels (pull_request)</span>
+                </a>
+              </h4>
+              <span><span>Successful in 7s</span></span>
+            </div>
+          </li>
+
+          <!-- Commit status from a third-party review bot: NO detail link, and the
+               row aria-label carries no state word — just "CodeRabbit " with a
+               trailing space. State must come from the enclosing group. -->
+          <li class="ListItem-module__listItem__wBJcm" aria-label="CodeRabbit ">
+            <span style="color: var(--fgColor-success);"><svg class="octicon octicon-check"></svg></span>
+            <img
+              data-testid="github-avatar"
+              alt="CodeRabbit"
+              src="https://avatars.githubusercontent.com/in/347564?s=40&amp;v=4"
+            />
+            <div class="Title-module__container__ZzhV_">
+              <h4 class="Title-module__heading__tHuYV"><span>CodeRabbit</span></h4>
+              <span class="StatusCheckRow-module__titleDescription__uQ3cm"><span></span> — Review completed</span>
+            </div>
+          </li>
+
+          <!-- Same shape, but with an external (non-github.com) detail link. -->
+          <li class="ListItem-module__listItem__wBJcm" aria-label="Devin Review ">
+            <span style="color: var(--fgColor-success);"><svg class="octicon octicon-check"></svg></span>
+            <img
+              data-testid="github-avatar"
+              alt="Devin Review"
+              src="https://avatars.githubusercontent.com/in/811515?s=40&amp;v=4"
+            />
+            <div class="Title-module__container__ZzhV_">
+              <h4>
+                <a href="https://review.example.com/review/acme/web/pull/1200" data-action="view_check_details">
+                  <span>Devin Review</span>
+                </a>
+              </h4>
+              <span><span></span> — Devin Review has completed analysis</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section aria-label="Merging is blocked" class="border-bottom borderColor-muted">
+    <h3 class="prc-Heading-Heading-MtWFE" data-component="Heading">Merging is blocked</h3>
+    <ul class="list-style-none">
+      <li>At least 1 approving review is required by reviewers with write access.</li>
+    </ul>
+  </section>
+</div>

@@ -1,0 +1,9 @@
+node_modules/
+dist/
+release/
+*.log
+
+# Fixtures captured from real PRs may contain private repo content. The checked-in
+# ones under test/fixtures/ are scrubbed by hand; keep raw captures out.
+test/fixtures/raw/
+.playwright-mcp/

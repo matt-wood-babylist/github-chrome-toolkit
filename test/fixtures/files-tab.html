@@ -1,0 +1,18 @@
+<!--
+  What the Files tab looks like to the parser: a PR page with no merge box
+  anywhere. Must return status:'unknown' so the banner hides rather than
+  claiming zero pending checks. This is the assertion that protects against the
+  worst failure mode — a confident PENDING CHECKS: 0 while CI is still running.
+-->
+<div id="repo-content-pjax-container">
+  <div class="pr-toolbar">
+    <div class="diffbar">
+      <span class="diffstat">+12 −3</span>
+    </div>
+  </div>
+  <div id="files" class="diff-view">
+    <div class="file js-file" data-tagsearch-path="app/models/thing.rb">
+      <div class="file-header" data-path="app/models/thing.rb"></div>
+    </div>
+  </div>
+</div>

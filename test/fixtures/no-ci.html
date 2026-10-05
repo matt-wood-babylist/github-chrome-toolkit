@@ -1,0 +1,18 @@
+<!--
+  Merge box on a repo with no CI configured: a Reviews section, no Checks
+  section. Must report 0 pending, NOT "unknown" — there is genuinely nothing
+  running. Contrast with files-tab.html, where the absence of the whole merge
+  box means we simply cannot tell.
+-->
+<div data-testid="mergebox-border-container">
+  <section aria-label="Reviews" aria-describedby="_r_2_">
+    <h3 id="_r_2_">Review required</h3>
+    <button aria-controls="_r_3_" aria-expanded="false" aria-label="Expand 2 pending review group">
+      <span>2 pending reviews</span>
+    </button>
+    <div id="_r_3_" aria-label="2 pending reviews" role="group"><div></div></div>
+  </section>
+  <section aria-label="Merging is blocked">
+    <h3>Merging is blocked</h3>
+  </section>
+</div>

@@ -1,0 +1,254 @@
+<!--
+  REAL capture from a live GitHub merge box with CI in flight (2026-08-05).
+  Org and the third-party review host are scrubbed; structure, attributes and
+  all group header counts are verbatim.
+
+  Rows are trimmed to representatives — the header counts still say 2 / 6 / 13 /
+  12, so this doubles as the collapsed-group regression test.
+
+  Three things this fixture pins down that were previously guesses:
+
+  1. "in progress checks" is the real group wording.
+  2. GitHub labels a group "pending checks" while the ROWS inside read
+     "Expected — Waiting for status to be reported", and the headline calls them
+     "2 expected". So `expected` never appears as a group word; expected checks
+     arrive bucketed under "pending".
+  3. An approved PR's Reviews group reads "1 approval", not "1 pending review" —
+     which is why the pending-review regex must not match it.
+-->
+<div data-testid="mergebox-border-container" class="border rounded-2 borderColor-default">
+  <section aria-label="Reviews" aria-describedby="_r_ig_" class="border-bottom color-border-subtle">
+    <div class="MergeBoxSectionHeader-module__wrapper___70DU">
+      <h3 class="prc-Heading-Heading-MtWFE" data-component="Heading" id="_r_ig_">Changes approved</h3>
+      <p class="fgColor-muted mb-0">1 approving review by reviewers with write access.</p>
+    </div>
+    <button
+      data-component="Button"
+      type="button"
+      aria-controls="_r_ih_"
+      aria-expanded="false"
+      aria-label="Expand 1 approval group"
+      class="prc-Button-ButtonBase-9n-Xk ReviewGroupExpander-module__groupHeadingButton__DNTCF"
+    >
+      <span data-component="text" class="prc-Button-Label-FWkx3">
+        <svg class="octicon octicon-check fgColor-success"></svg>
+        <span class="ml-1">1 approval</span>
+      </span>
+    </button>
+    <div class="ReviewGroupExpander-module__expandableWrapper__jNKdT" id="_r_ih_" aria-label="1 approval" role="group">
+      <div class="ReviewGroupExpander-module__expandableListView__Y3SS3"></div>
+    </div>
+  </section>
+
+  <section aria-label="Checks" aria-describedby="_r_3_" class="border-bottom color-border-subtle">
+    <div class="MergeBoxSectionHeader-module__wrapper___70DU">
+      <h3 class="prc-Heading-Heading-MtWFE" data-component="Heading" id="_r_3_">Some checks haven't completed yet</h3>
+      <p class="fgColor-muted mb-0">6 in progress, 13 skipped, 2 expected, 12 successful checks</p>
+    </div>
+
+    <!-- Group says "pending", rows say "Expected". Both are the same 2 checks. -->
+    <div>
+      <div class="ExpandedChecks-module__groupHeader__BcP6u">
+        <button
+          data-component="Button"
+          type="button"
+          aria-controls="_r_m9_"
+          aria-expanded="true"
+          aria-label="Collapse 2 pending checks group"
+          data-action="collapse_checks_group"
+        >
+          <span data-component="text" class="prc-Button-Label-FWkx3">2 pending checks</span>
+        </button>
+      </div>
+      <div class="ExpandedChecks-module__expandableWrapper__vAy7Q" id="_r_m9_" aria-label="pending checks" role="group">
+        <ul class="ListView-module__ul__uMK30" role="list">
+          <li class="ListItem-module__listItem__wBJcm" aria-label="Jest expected">
+            <span style="color: var(--fgColor-attention);"><svg class="octicon octicon-dot-fill"></svg></span>
+            <img data-testid="github-avatar" alt="Jest" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4 class="Title-module__heading__tHuYV"><span>Jest</span></h4>
+              <span class="StatusCheckRow-module__titleDescription__uQ3cm"><span>Expected</span> — Waiting for status to be reported</span>
+            </div>
+            <div class="Metadata-module__metadata__ocr9n">
+              <span class="prc-Label-Label-qG-Zu" data-component="Label">Required</span>
+            </div>
+          </li>
+          <li class="ListItem-module__listItem__wBJcm" aria-label="E2E Tests expected">
+            <span style="color: var(--fgColor-attention);"><svg class="octicon octicon-dot-fill"></svg></span>
+            <img data-testid="github-avatar" alt="E2E Tests" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4><span>E2E Tests</span></h4>
+              <span><span>Expected</span> — Waiting for status to be reported</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- In-progress rows carry a spinner rather than an octicon. -->
+    <div>
+      <div class="ExpandedChecks-module__groupHeader__BcP6u">
+        <button
+          data-component="Button"
+          type="button"
+          aria-controls="_r_pj_"
+          aria-expanded="true"
+          aria-label="Collapse 6 in progress checks group"
+          data-action="collapse_checks_group"
+        >
+          <span data-component="text" class="prc-Button-Label-FWkx3">6 in progress checks</span>
+        </button>
+      </div>
+      <div class="ExpandedChecks-module__expandableWrapper__vAy7Q" id="_r_pj_" aria-label="in progress checks" role="group">
+        <ul class="ListView-module__ul__uMK30" role="list">
+          <li
+            class="ListItem-module__listItem__wBJcm"
+            aria-label="Tests / Container / Build e2e-suite (pull_request) started 3m ago"
+          >
+            <div class="CheckSpinner-module__checksSpinnerWrapper__qfgfz">
+              <span class="prc-Spinner-Box-Y-ke-" data-component="Spinner"><svg class="prc-Spinner-SpinnerAnimation-tutJZ"></svg></span>
+            </div>
+            <img
+              data-testid="github-avatar"
+              alt="Tests / Container / Build e2e-suite (pull_request)"
+              src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4"
+            />
+            <div class="Title-module__container__ZzhV_">
+              <h4 class="Title-module__heading__tHuYV">
+                <a
+                  class="Title-module__anchor__dBbYy"
+                  href="/acme/web/actions/runs/10000000004/job/10000000005?pr=1234"
+                  data-action="view_check_details"
+                >
+                  <span>Tests / Container / Build e2e-suite (pull_request)</span>
+                </a>
+              </h4>
+              <span class="StatusCheckRow-module__titleDescription__uQ3cm text-italic">
+                <span>Started <relative-time datetime="2026-08-05T15:57:45.000Z">Aug 5, 2026</relative-time></span>
+                — This check has started...
+              </span>
+            </div>
+            <div class="Metadata-module__metadata__ocr9n">
+              <span class="prc-Label-Label-qG-Zu" data-component="Label">Required</span>
+            </div>
+          </li>
+          <li class="ListItem-module__listItem__wBJcm" aria-label="Tests / Jest (1) (pull_request) started 3m ago">
+            <div class="CheckSpinner-module__checksSpinnerWrapper__qfgfz">
+              <span class="prc-Spinner-Box-Y-ke-" data-component="Spinner"><svg class="prc-Spinner-SpinnerAnimation-tutJZ"></svg></span>
+            </div>
+            <img data-testid="github-avatar" alt="Tests / Jest (1) (pull_request)" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4>
+                <a href="/acme/web/actions/runs/10000000004/job/10000000006?pr=1234" data-action="view_check_details">
+                  <span>Tests / Jest (1) (pull_request)</span>
+                </a>
+              </h4>
+              <span><span>Started</span> — This check has started...</span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="ExpandedChecks-module__groupHeader__BcP6u">
+        <button
+          data-component="Button"
+          type="button"
+          aria-controls="_r_oc_"
+          aria-expanded="true"
+          aria-label="Collapse 13 skipped checks group"
+          data-action="collapse_checks_group"
+        >
+          <span data-component="text" class="prc-Button-Label-FWkx3">13 skipped checks</span>
+        </button>
+      </div>
+      <div class="ExpandedChecks-module__expandableWrapper__vAy7Q" id="_r_oc_" aria-label="skipped checks" role="group">
+        <ul class="ListView-module__ul__uMK30" role="list">
+          <!-- An AI reviewer that was skipped: must NOT be counted as pending. -->
+          <li class="ListItem-module__listItem__wBJcm" aria-label="Claude Code / claude (pull_request) skipped">
+            <span style="color: var(--fgColor-muted);"><svg class="octicon octicon-skip"></svg></span>
+            <img data-testid="github-avatar" alt="Claude Code / claude (pull_request)" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4>
+                <a href="/acme/web/actions/runs/10000000007/job/10000000008?pr=1234" data-action="view_check_details">
+                  <span>Claude Code / claude (pull_request)</span>
+                </a>
+              </h4>
+              <span><span>Skipped</span></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div>
+      <div class="ExpandedChecks-module__groupHeader__BcP6u">
+        <button
+          data-component="Button"
+          type="button"
+          aria-controls="_r_s7_"
+          aria-expanded="true"
+          aria-label="Collapse 12 successful checks group"
+          data-action="collapse_checks_group"
+        >
+          <span data-component="text" class="prc-Button-Label-FWkx3">12 successful checks</span>
+        </button>
+      </div>
+      <div class="ExpandedChecks-module__expandableWrapper__vAy7Q" id="_r_s7_" aria-label="successful checks" role="group">
+        <ul class="ListView-module__ul__uMK30" role="list">
+          <li class="ListItem-module__listItem__wBJcm" aria-label="CodeRabbit ">
+            <span style="color: var(--fgColor-success);"><svg class="octicon octicon-check"></svg></span>
+            <img data-testid="github-avatar" alt="CodeRabbit" src="https://avatars.githubusercontent.com/in/347564?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4 class="Title-module__heading__tHuYV"><span>CodeRabbit</span></h4>
+              <span class="StatusCheckRow-module__titleDescription__uQ3cm"><span></span> — Review completed</span>
+            </div>
+          </li>
+          <li class="ListItem-module__listItem__wBJcm" aria-label="Devin Review ">
+            <span style="color: var(--fgColor-success);"><svg class="octicon octicon-check"></svg></span>
+            <img data-testid="github-avatar" alt="Devin Review" src="https://avatars.githubusercontent.com/in/811515?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4>
+                <a href="https://review.example.com/review/acme/web/pull/1234" data-action="view_check_details">
+                  <span>Devin Review</span>
+                </a>
+              </h4>
+              <span><span></span> — Devin Review has completed analysis</span>
+            </div>
+          </li>
+          <li class="ListItem-module__listItem__wBJcm" aria-label="Warden / warden / review (pull_request) successful in 2m">
+            <span style="color: var(--fgColor-success);"><svg class="octicon octicon-check"></svg></span>
+            <img data-testid="github-avatar" alt="Warden / warden / review (pull_request)" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <div class="Title-module__container__ZzhV_">
+              <h4>
+                <a href="/acme/web/actions/runs/10000000009/job/10000000010?pr=1234" data-action="view_check_details">
+                  <span>Warden / warden / review (pull_request)</span>
+                </a>
+              </h4>
+              <span><span>Successful in 2m</span></span>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Previously unseen section. Its "Update branch" button must not be mistaken
+       for a review-request control. -->
+  <section aria-label="Conflicts" class="border-bottom borderColor-muted" aria-describedby="_r_l_">
+    <div class="MergeBoxSectionHeader-module__wrapper___70DU">
+      <h3 class="prc-Heading-Heading-MtWFE" data-component="Heading" id="_r_l_">This branch is out-of-date with the base branch</h3>
+      <p class="fgColor-muted mb-0">Merge the latest changes from main into this branch.</p>
+      <button data-component="Button" type="button" class="prc-Button-ButtonBase-9n-Xk flex-1">
+        <span data-component="text" class="prc-Button-Label-FWkx3">Update branch</span>
+      </button>
+    </div>
+  </section>
+
+  <div class="bgColor-muted borderColor-muted tmp-p-3 rounded-bottom-2">
+    <button aria-disabled="false" data-component="Button" type="button" class="prc-Button-ButtonBase-9n-Xk flex-1">
+      <span data-component="text" class="prc-Button-Label-FWkx3">Merge when ready</span>
+    </button>
+  </div>
+</div>

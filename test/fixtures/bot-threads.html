@@ -1,0 +1,291 @@
+<!--
+  REAL capture: `copy(document.querySelector('.js-discussion').outerHTML)` from a
+  PR with bot review threads, both resolved and unresolved.
+
+  Trimmed hard — comment forms, reaction menus, dropdown menus, diff tables and
+  markdown toolbars are gone. Every class name, attribute and author string that
+  the parser touches is untouched. Scrubbed: the org is now `acme`, the human login
+  `alex-dev`, and any internal review host `review.example.com`. Bot names are
+  public GitHub Apps and are kept verbatim, since they are what the parser matches.
+
+  Ground truth: ONE unresolved bot thread, opened by devin-ai-integration. The
+  four resolved threads and every non-resolvable bot comment above them must not
+  count.
+
+  Three things this capture settles that guesswork had wrong:
+
+  1. Timeline avatars carry NO `data-testid="github-avatar"` — that attribute is
+     merge-box React only. The bare `/in/<id>` src is the signal.
+  2. The Bot badge here is `class="Label Label--secondary"`, with no
+     `data-component` attribute. Same component, different renderer.
+  3. A thread can hold a bot comment AND a human reply. Scanning the whole thread
+     for "any bot" would count a human-opened thread that a bot replied to.
+-->
+<div class="js-discussion ml-0 pl-0 tmp-ml-md-6 tmp-pl-md-3 js-socket-channel" data-channel-target="PR_kwDOAAAAAA0000001">
+
+  <!-- The PR body. A `js-comment`, but NOT a resolvable thread: nothing to resolve. -->
+  <div class="TimelineItem TimelineItem--condensed pt-0 js-comment-container js-updatable-content">
+    <div class="timeline-comment-group js-minimizable-comment-group js-targetable-element TimelineItem-body my-0" id="issue-1000000011">
+      <div id="pullrequest-1000000012" class="timeline-comment-group comment js-comment editable-comment current-user unminimized-comment">
+        <h3 class="f5 text-normal py-2">
+          <strong>
+            <a class="author Link--primary text-bold" data-hovercard-type="user" href="/alex-dev">alex-dev</a>
+          </strong>
+          commented
+        </h3>
+        <div class="comment-body markdown-body js-comment-body">
+          <h2 dir="auto">Why?</h2>
+          <p dir="auto">The settings page date picker does not open.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    Bot issue comments. These are `js-comment-container` but NOT
+    `js-resolvable-timeline-thread-container`, so they are correctly invisible to
+    the parser. That matters: they can never be resolved, so counting them would
+    pin the guard open for the life of the PR.
+  -->
+  <div class="TimelineItem js-comment-container">
+    <div class="avatar-parent-child TimelineItem-avatar d-none d-md-block">
+      <a class="d-inline-block" href="/apps/linear-code"><img class="avatar rounded-2" src="https://avatars.githubusercontent.com/in/1658531?s=80&amp;v=4" width="40" height="40" alt="@linear-code"></a>
+    </div>
+    <div class="timeline-comment-group TimelineItem-body my-0" id="issuecomment-1000000013">
+      <div class="timeline-comment unminimized-comment comment js-comment">
+        <h3 class="f5 text-normal py-2">
+          <strong>
+            <a class="author Link--primary text-bold" href="/apps/linear-code">linear-code</a>
+            <span class="Label Label--secondary">Bot</span>
+          </strong>
+          commented
+        </h3>
+        <td class="d-block comment-body markdown-body js-comment-body">
+          <p dir="auto">ENG-123 Settings date picker does not open</p>
+        </td>
+      </div>
+    </div>
+  </div>
+
+  <div class="TimelineItem js-comment-container">
+    <div class="avatar-parent-child TimelineItem-avatar d-none d-md-block">
+      <a class="d-inline-block" href="/apps/coderabbitai"><img class="avatar rounded-2" src="https://avatars.githubusercontent.com/in/347564?s=80&amp;v=4" width="40" height="40" alt="@coderabbitai"></a>
+    </div>
+    <div class="timeline-comment-group TimelineItem-body my-0" id="issuecomment-1000000014">
+      <div class="timeline-comment unminimized-comment comment js-comment">
+        <h3 class="f5 text-normal py-2">
+          <strong>
+            <a class="author Link--primary text-bold" href="/apps/coderabbitai">coderabbitai</a>
+            <span class="Label Label--secondary">Bot</span>
+          </strong>
+          commented
+        </h3>
+        <td class="d-block comment-body markdown-body js-comment-body">
+          <h2 dir="auto">Walkthrough</h2>
+        </td>
+      </div>
+    </div>
+  </div>
+
+  <!--
+    UNRESOLVED review thread opened by a bot. This is the one that counts.
+
+    Note the human reply below the bot's comment: the PR author answered the bot
+    and deliberately left the thread open. Any "is there a bot anywhere in this
+    thread" test would also fire on the mirror image of this shape — a human
+    thread with a bot reply — so the opener is what has to be inspected.
+  -->
+  <turbo-frame id="review-thread-or-comment-id-1000000015" target="_top">
+    <review-thread-collapsible class="review-thread-component js-comment-container js-resolvable-timeline-thread-container border rounded-2 d-block tmp-mb-3 open" data-resolved="false" data-catalyst="">
+      <div class="d-flex flex-items-center p-2 rounded-top-2 bgColor-muted">
+        <span class="flex-auto tmp-mr-3 d-flex flex-items-center">
+          <a href="/acme/web/pull/1234/files/a1b2c3d#diff-1111111" class="text-mono text-small Link--primary wb-break-all mr-2">src/components/DateField/DateField.tsx</a>
+        </span>
+      </div>
+
+      <div class="js-inline-comments-container">
+        <div class="js-line-comments js-suggested-changes-container">
+          <div class="js-comments-holder">
+
+            <div id="discussion_r1000000016" class="timeline-comment-group js-minimizable-comment-group js-targetable-element my-0 comment previewable-edit js-task-list-container js-comment review-comment js-minimize-container unminimized-comment">
+              <div class="ml-n1 flex-items-center clearfix d-flex flex-row flex-items-start">
+                <h3 class="f5 text-normal py-2">
+                  <div class="d-flex flex-items-center flex-wrap gap-1">
+                    <span class="d-inline-flex">
+                      <img src="https://avatars.githubusercontent.com/in/811515?s=48&amp;v=4" alt="@devin-ai-integration" size="24" height="24" width="24" data-view-component="true" class="avatar mr-2 tmp-mr-2">
+                    </span>
+                    <strong>
+                      <a class="author Link--primary text-bold css-overflow-wrap-anywhere " show_full_name="false" href="/apps/devin-ai-integration">devin-ai-integration</a>
+                      <span class="Label Label--secondary">Bot</span>
+                    </strong>
+                  </div>
+                </h3>
+              </div>
+              <div class="tmp-ml-5">
+                <div class="comment-body markdown-body js-comment-body soft-wrap user-select-contain d-block">
+                  <p dir="auto">📝 <strong>Info: Caller can still clobber the date library's onFocus/onBlur/onChange</strong></p>
+                  <p dir="auto">Only <code class="notranslate">ref</code> is protected from the <code class="notranslate">...inputProps</code> spread.</p>
+                </div>
+              </div>
+            </div>
+
+            <div id="discussion_r1000000017" class="timeline-comment-group js-minimizable-comment-group js-targetable-element my-0 comment previewable-edit js-task-list-container js-comment review-comment js-minimize-container current-user unminimized-comment">
+              <div class="ml-n1 flex-items-center clearfix d-flex flex-row flex-items-start">
+                <h3 class="f5 text-normal py-2">
+                  <div class="d-flex flex-items-center flex-wrap gap-1">
+                    <span class="d-inline-flex">
+                      <img src="https://avatars.githubusercontent.com/u/10000001?s=48&amp;v=4" alt="@alex-dev" size="24" height="24" width="24" data-view-component="true" class="avatar circle mr-2 tmp-mr-2">
+                    </span>
+                    <strong>
+                      <a class="author Link--primary text-bold css-overflow-wrap-anywhere " show_full_name="false" data-hovercard-type="user" href="/alex-dev">alex-dev</a>
+                    </strong>
+                  </div>
+                </h3>
+                <div class="d-flex flex-row-reverse flex-items-center flex-shrink-0 tmp-pl-3">
+                  <div class="d-none d-sm-flex">
+                    <span data-view-component="true" class="Label ml-1 tmp-ml-1">Author</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tmp-ml-5">
+                <div class="comment-body markdown-body js-comment-body soft-wrap user-select-contain d-block">
+                  <p dir="auto">Agreed, and confirmed against the library source rather than just the prop names.</p>
+                  <p dir="auto">Leaving this thread open so it stays visible until the follow-up lands.</p>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <form class="js-resolvable-timeline-thread-form d-flex flex-justify-between flex-wrap tmp-m-3" action="/acme/web/pull/1234/threads/1000000015/resolve" method="post">
+        <div class="d-flex flex-items-center">
+          <button type="submit" data-view-component="true" class="Button--secondary Button--medium Button">
+            <span class="Button-content"><span class="Button-label">Resolve conversation</span></span>
+          </button>
+        </div>
+      </form>
+    </review-thread-collapsible>
+  </turbo-frame>
+
+  <!-- RESOLVED, bot-opened. Must not count. -->
+  <turbo-frame id="review-thread-or-comment-id-1000000018" target="_top">
+    <review-thread-collapsible class="review-thread-component js-comment-container js-resolvable-timeline-thread-container border rounded-2 d-block tmp-mb-3" data-resolved="true" data-hidden-comment-ids="1000000019" data-catalyst="">
+      <div class="d-flex flex-items-center p-2 rounded-top-2 bgColor-muted js-toggle-outdated-comments">
+        <span class="flex-auto tmp-mr-3 d-flex flex-items-center">
+          <a href="/acme/web/pull/1234/files/b2c3d4e#diff-1111111" class="text-mono text-small Link--primary wb-break-all mr-2">src/components/DateField/DateField.tsx</a>
+          <span title="Label: Outdated" data-view-component="true" class="Label Label--secondary">Outdated</span>
+        </span>
+      </div>
+      <div hidden="">
+        <div class="js-inline-comments-container">
+          <div class="js-comments-holder">
+            <div id="discussion_r1000000019" class="timeline-comment-group my-0 comment js-comment review-comment unminimized-comment">
+              <h3 class="f5 text-normal py-2">
+                <span class="d-inline-flex">
+                  <img src="https://avatars.githubusercontent.com/in/811515?s=48&amp;v=4" alt="@devin-ai-integration" size="24" height="24" width="24" class="avatar mr-2 tmp-mr-2">
+                </span>
+                <strong>
+                  <a class="author Link--primary text-bold" href="/apps/devin-ai-integration">devin-ai-integration</a>
+                  <span class="Label Label--secondary">Bot</span>
+                </strong>
+              </h3>
+              <div class="comment-body markdown-body js-comment-body">
+                <p dir="auto">🟡 <strong>Explanatory comment left in a React component file against repo convention</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <form class="js-resolvable-timeline-thread-form tmp-m-3" action="/acme/web/pull/1234/threads/1000000018/unresolve" method="post">
+          <button type="submit" class="Button--secondary Button--medium Button">
+            <span class="Button-content"><span class="Button-label">Unresolve conversation</span></span>
+          </button>
+          <div class="d-lg-inline d-block "><strong>alex-dev</strong> marked this conversation as resolved.</div>
+        </form>
+      </div>
+    </review-thread-collapsible>
+  </turbo-frame>
+
+  <!-- RESOLVED. Note the doubled turbo-frame: GitHub really emits this. -->
+  <turbo-frame id="review-thread-or-comment-id-1000000020" target="_top">
+    <turbo-frame id="review-thread-or-comment-id-1000000020" target="_top">
+      <review-thread-collapsible class="review-thread-component js-comment-container js-resolvable-timeline-thread-container border rounded-2 d-block tmp-mb-3" data-resolved="true" data-hidden-comment-ids="1000000021" data-catalyst="">
+        <div class="d-flex flex-items-center p-2 rounded-top-2 bgColor-muted js-toggle-outdated-comments">
+          <span class="flex-auto tmp-mr-3 d-flex flex-items-center">
+            <a href="/acme/web/pull/1234/files/b2c3d4e#diff-2222222" class="text-mono text-small Link--primary wb-break-all mr-2">src/components/DateField/DateField.utils.test.ts</a>
+          </span>
+        </div>
+        <div hidden="">
+          <div class="js-comments-holder">
+            <div id="discussion_r1000000021" class="timeline-comment-group my-0 comment js-comment review-comment unminimized-comment">
+              <h3 class="f5 text-normal py-2">
+                <strong>
+                  <a class="author Link--primary text-bold" href="/apps/devin-ai-integration">devin-ai-integration</a>
+                  <span class="Label Label--secondary">Bot</span>
+                </strong>
+              </h3>
+              <div class="comment-body markdown-body js-comment-body">
+                <p dir="auto">🟡 <strong>Test files contain explanatory comments the repo convention disallows</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </review-thread-collapsible>
+    </turbo-frame>
+  </turbo-frame>
+
+  <!-- RESOLVED. -->
+  <turbo-frame id="review-thread-or-comment-id-1000000022" target="_top">
+    <review-thread-collapsible class="review-thread-component js-comment-container js-resolvable-timeline-thread-container border rounded-2 d-block tmp-mb-3" data-resolved="true" data-hidden-comment-ids="1000000023" data-catalyst="">
+      <div class="d-flex flex-items-center p-2 rounded-top-2 bgColor-muted js-toggle-outdated-comments">
+        <span class="flex-auto tmp-mr-3 d-flex flex-items-center">
+          <a href="/acme/web/pull/1234/files/b2c3d4e#diff-3333333" class="text-mono text-small Link--primary wb-break-all mr-2">src/components/DateField/DateField.utils.ts</a>
+        </span>
+      </div>
+      <div hidden="">
+        <div class="js-comments-holder">
+          <div id="discussion_r1000000023" class="timeline-comment-group my-0 comment js-comment review-comment unminimized-comment">
+            <h3 class="f5 text-normal py-2">
+              <strong>
+                <a class="author Link--primary text-bold" href="/apps/devin-ai-integration">devin-ai-integration</a>
+                <span class="Label Label--secondary">Bot</span>
+              </strong>
+            </h3>
+            <div class="comment-body markdown-body js-comment-body">
+              <p dir="auto">🟡 <strong>Type-checker escape hatch used instead of typing the helper correctly</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </review-thread-collapsible>
+  </turbo-frame>
+
+  <!-- RESOLVED. -->
+  <turbo-frame id="review-thread-or-comment-id-1000000024" target="_top">
+    <review-thread-collapsible class="review-thread-component js-comment-container js-resolvable-timeline-thread-container border rounded-2 d-block tmp-mb-3" data-resolved="true" data-hidden-comment-ids="1000000025" data-catalyst="">
+      <div class="d-flex flex-items-center p-2 rounded-top-2 bgColor-muted js-toggle-outdated-comments">
+        <span class="flex-auto tmp-mr-3 d-flex flex-items-center">
+          <a href="/acme/web/pull/1234/files/c3d4e5f#diff-1111111" class="text-mono text-small Link--primary wb-break-all mr-2">src/components/DateField/DateField.tsx</a>
+          <span title="Label: Outdated" data-view-component="true" class="Label Label--secondary">Outdated</span>
+        </span>
+      </div>
+      <div hidden="">
+        <div class="js-comments-holder">
+          <div id="discussion_r1000000025" class="timeline-comment-group my-0 comment js-comment review-comment unminimized-comment">
+            <h3 class="f5 text-normal py-2">
+              <strong>
+                <a class="author Link--primary text-bold" href="/apps/devin-ai-integration">devin-ai-integration</a>
+                <span class="Label Label--secondary">Bot</span>
+              </strong>
+            </h3>
+            <div class="comment-body markdown-body js-comment-body">
+              <p dir="auto">🔴 <strong>Source file contains a duplicated line that makes it invalid</strong></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </review-thread-collapsible>
+  </turbo-frame>
+
+</div>

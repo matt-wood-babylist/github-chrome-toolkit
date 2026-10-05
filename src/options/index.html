@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pending Checks Banner — Options</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 20px;
+        min-width: 380px;
+      }
+      h1 { font-size: 16px; margin: 0 0 16px; }
+      fieldset { border: 0; margin: 0 0 18px; padding: 0; }
+      label { display: block; margin-bottom: 12px; }
+      .row { display: flex; align-items: center; gap: 8px; }
+      input[type="number"] { width: 5em; }
+      input[type="text"] { width: 100%; box-sizing: border-box; }
+      .hint { color: GrayText; font-size: 12px; margin: 2px 0 0; }
+      #status { color: GrayText; font-size: 12px; min-height: 1.5em; }
+      h2 { font-size: 14px; margin: 0 0 4px; }
+      .error { color: #cf222e; font-size: 12px; margin: 6px 0 0; min-height: 1.2em; }
+      @media (prefers-color-scheme: dark) { .error { color: #ff8182; } }
+      .custom-list { list-style: none; margin: 10px 0 0; padding: 0; }
+      .custom-list li {
+        display: flex;
+        align-items: center;
+        gap: 8px;
+        padding: 5px 0;
+        border-top: 1px solid color-mix(in srgb, currentColor 15%, transparent);
+      }
+      .custom-list .name { flex: 1 1 auto; min-width: 0; overflow-wrap: anywhere; }
+      .custom-list code { color: GrayText; font-size: 12px; }
+      /* Fixed basis so the two inputs share the row evenly and the button never wraps. */
+      .custom-add { margin-top: 12px; }
+      .custom-add input { flex: 1 1 0; min-width: 0; }
+      .custom-add button { flex: 0 0 auto; }
+    </style>
+  </head>
+  <body>
+    <h1>Pending Checks Banner</h1>
+    <fieldset>
+      <label>
+        <div class="row">
+          <input id="pendingRefreshSeconds" type="number" min="10" max="600" step="5" />
+          <span>seconds between re-checks while checks are running</span>
+        </div>
+        <p class="hint">
+          Only applies to the Files, Commits and Checks tabs, and only while the tab is
+          open in front of you and something is actually pending. The Conversation tab
+          watches GitHub's merge box directly and updates the instant it changes, without
+          any network requests. Nothing is polled in a background tab.
+        </p>
+      </label>
+      <label>
+        <div class="row">
+          <input id="includeOtherReviews" type="checkbox" />
+          <span>Count reviewers that aren't identifiable as bots</span>
+        </div>
+        <p class="hint">
+          Off by default. GitHub only reveals whether a pending reviewer is a bot or a
+          human when the Reviews section is expanded, so turning this on can keep the
+          banner up for the whole life of a PR waiting on human approval. Bot reviewers
+          are always counted without this.
+        </p>
+      </label>
+      <label>
+        <div class="row">
+          <input id="guardReviewRequests" type="checkbox" />
+          <span>Confirm before requesting a review while bots are outstanding</span>
+        </div>
+        <p class="hint">
+          Intercepts “Ready for review”, the reviewer picker and re-requests, and asks
+          first. Always dismissible — it stops an accident, it does not lock you out of
+          your own PR. Never fires when the page could not be read.
+        </p>
+      </label>
+      <label>
+        <div class="row">
+          <input id="guardOnUnresolvedBotComments" type="checkbox" />
+          <span>…also when bots left unresolved comments</span>
+        </div>
+        <p class="hint">
+          Bots finishing is not the same as their feedback being read. Requesting review
+          over the top of eight unread CodeRabbit comments wastes the reviewer's time the
+          same way requesting it too early does.
+        </p>
+      </label>
+      <label>
+        <div class="row">
+          <input id="guardOnAnyPending" type="checkbox" />
+          <span>…also for ordinary CI checks</span>
+        </div>
+        <p class="hint">
+          Off by default on purpose: a dialog that fires for a trailing lint job trains
+          you to dismiss it without reading, and then it protects nothing.
+        </p>
+      </label>
+      <label>
+        <span>Treat checks whose name contains… as AI reviewers</span>
+        <input id="aiReviewers" type="text" placeholder="coderabbit, devin, warden" />
+        <p class="hint">
+          Comma-separated, case-insensitive. Needed because the distinction isn't
+          structural — Warden and Claude Code run as ordinary GitHub Actions jobs, so
+          nothing but the name separates them from a test suite.
+        </p>
+      </label>
+      <label>
+        <span>Ignore checks whose name contains…</span>
+        <input id="denyList" type="text" placeholder="codecov, license/cla" />
+        <p class="hint">Comma-separated, case-insensitive. Only applies to checks in an expanded group.</p>
+      </label>
+      <label>
+        <div class="row">
+          <input id="debug" type="checkbox" />
+          <span>Log detection details to the console</span>
+        </div>
+        <p class="hint">Turn this on if the banner is missing or shows the wrong number.</p>
+      </label>
+    </fieldset>
+
+    <fieldset>
+      <h2>Custom actions</h2>
+      <p class="hint">
+        Extra entries in the bar's Actions popover and the toolbar dropdown, alongside
+        the three built in. Each opens a Claude Code session prefilled with your skill
+        and this pull request's URL.
+      </p>
+
+      <ul id="customList" class="custom-list"></ul>
+      <p id="customEmpty" class="hint">No custom actions yet.</p>
+
+      <div class="row custom-add">
+        <input id="customLabel" type="text" placeholder="Action Display Name" aria-label="Action display name" />
+        <input id="customCommand" type="text" placeholder="/name-of-skill" aria-label="Claude skill" spellcheck="false" />
+        <button id="customAdd" type="button">Add</button>
+      </div>
+      <p id="customError" class="error" role="alert"></p>
+      <p class="hint">
+        A skill looks like <code>/pr-review</code>, or <code>/plugin:skill</code> for one
+        that comes from a plugin. Letters, digits, hyphens, underscores and colons.
+      </p>
+    </fieldset>
+    <div id="status" role="status"></div>
+    <script src="options.js"></script>
+  </body>
+</html>

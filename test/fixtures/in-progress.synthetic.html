@@ -1,0 +1,66 @@
+<!--
+  PARTLY SYNTHETIC.
+
+  The group wording here is now CONFIRMED against a live capture — see
+  in-flight.html, which verified "in progress checks" and "pending checks".
+  "queued checks" remains unobserved and is still a hedge.
+
+  What stays fabricated is the SCENARIO: a bot review that is still running.
+  Every real capture so far caught CodeRabbit and Devin already reported, so this
+  is the only fixture exercising the path that actually matters for the review
+  guard. Worth replacing with a real capture if you ever catch a PR mid-review.
+-->
+<div data-testid="mergebox-border-container">
+  <section aria-label="Checks" aria-describedby="_h_">
+    <div>
+      <h3 id="_h_">Some checks haven’t completed yet</h3>
+      <p>2 in progress, 1 queued, 4 successful checks</p>
+    </div>
+
+    <div>
+      <div>
+        <button aria-controls="g_ip" aria-expanded="true" aria-label="Collapse 2 in progress checks group">
+          <span>2 in progress checks</span>
+        </button>
+      </div>
+      <div id="g_ip" aria-label="in progress checks" role="group">
+        <ul role="list">
+          <li aria-label="Tests / RSpec (pull_request) in progress">
+            <svg class="octicon octicon-dot-fill"></svg>
+            <img data-testid="github-avatar" src="https://avatars.githubusercontent.com/in/15368?s=40&amp;v=4" />
+            <h4>
+              <a href="/acme/web/actions/runs/10000000002/job/10000000003?pr=1200" data-action="view_check_details">
+                <span>Tests / RSpec (pull_request)</span>
+              </a>
+            </h4>
+          </li>
+          <li aria-label="CodeRabbit ">
+            <svg class="octicon octicon-dot-fill"></svg>
+            <img data-testid="github-avatar" src="https://avatars.githubusercontent.com/in/347564?s=40&amp;v=4" />
+            <h4><span>CodeRabbit</span></h4>
+            <span><span></span> — Review in progress</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Collapsed pending group: header says 1, zero rows rendered. -->
+    <div>
+      <div>
+        <button aria-controls="g_q" aria-expanded="false" aria-label="Expand 1 queued checks group">
+          <span>1 queued check</span>
+        </button>
+      </div>
+      <div id="g_q" aria-label="queued checks" role="group"><div></div></div>
+    </div>
+
+    <div>
+      <div>
+        <button aria-controls="g_ok" aria-expanded="false" aria-label="Expand 4 successful checks group">
+          <span>4 successful checks</span>
+        </button>
+      </div>
+      <div id="g_ok" aria-label="successful checks" role="group"><div></div></div>
+    </div>
+  </section>
+</div>

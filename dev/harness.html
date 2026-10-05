@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Pending Checks Banner — dev harness</title>
+    <style>
+      :root { color-scheme: light dark; }
+      body {
+        font: 14px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 24px;
+      }
+      h1 { font-size: 18px; margin: 0 0 4px; }
+      .sub { color: GrayText; margin: 0 0 20px; }
+      .controls { display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px; }
+      button {
+        font: inherit;
+        padding: 6px 12px;
+        border: 1px solid #d0d7de;
+        border-radius: 6px;
+        background: Canvas;
+        color: CanvasText;
+        cursor: pointer;
+      }
+      button[aria-pressed="true"] { border-color: #0969da; font-weight: 600; }
+      pre {
+        background: rgba(127, 127, 127, 0.12);
+        padding: 12px;
+        border-radius: 6px;
+        overflow-x: auto;
+        font-size: 12px;
+      }
+      #mount { display: none; }
+    </style>
+  </head>
+  <body>
+    <h1>Pending Checks Banner — dev harness</h1>
+    <p class="sub">
+      Renders the banner against saved fixtures, outside the extension. Lets you iterate on
+      the banner and the parser without reloading anything in chrome://extensions.
+    </p>
+    <div class="controls" id="controls"></div>
+    <p class="sub" style="margin:0 0 8px">
+      Fake GitHub controls — the review guard should intercept these while bots are
+      outstanding, and let them through once you choose to proceed:
+    </p>
+    <div class="controls" id="fake-github">
+      <button id="ready">Ready for review</button>
+      <button id="reviewers">Reviewers 2</button>
+      <button id="rerequest" aria-label="Re-request review from octocat">&#8635;</button>
+      <button id="unrelated">Merge when ready</button>
+    </div>
+    <pre id="clicks">no clicks yet</pre>
+    <pre id="output">loading…</pre>
+    <div id="mount"></div>
+    <script src="harness.js"></script>
+  </body>
+</html>

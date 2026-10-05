@@ -1,0 +1,92 @@
+<!--
+  SIGNAL MATRIX. Structure is now confirmed — see bot-threads.html for the real
+  `.js-discussion` capture that this file's container classes, `data-resolved`
+  values and Label markup were checked against.
+
+  This fixture exists for the bot-author signals the real capture does NOT
+  contain. That PR's threads were all opened by devin-ai-integration, which
+  exercises signal 1 (an /apps/ link) four times over and the other three never.
+  Each thread below isolates one signal, so a regression names which one broke.
+
+  Every thread wraps its content in a `.js-comment` opener, matching the real
+  markup: author detection is scoped to a thread's first comment, so testing the
+  signals outside that wrapper would pass while the production path failed.
+-->
+<div class="js-discussion">
+
+  <!-- 1. Unresolved, bot identified by its /apps/ profile link. -->
+  <review-thread-collapsible class="js-comment-container js-resolvable-timeline-thread-container" data-resolved="false">
+    <div class="js-comments-holder">
+      <div class="js-comment review-comment">
+        <a class="author Link--primary text-bold" href="/apps/coderabbitai">coderabbitai</a>
+        <span class="Label Label--secondary">Bot</span>
+        <p>Consider extracting this into a helper.</p>
+      </div>
+    </div>
+    <button type="submit" class="Button--secondary Button--medium Button">Resolve conversation</button>
+  </review-thread-collapsible>
+
+  <!-- 2. Unresolved, bot identified by a [bot] login suffix and nothing else. -->
+  <review-thread-collapsible class="js-comment-container js-resolvable-timeline-thread-container" data-resolved="false">
+    <div class="js-comments-holder">
+      <div class="js-comment review-comment">
+        <a class="author Link--primary text-bold" data-hovercard-type="user" href="/cursor">cursor[bot]</a>
+        <p>Possible null dereference here.</p>
+      </div>
+    </div>
+    <button type="submit" class="Button--secondary Button--medium Button">Resolve conversation</button>
+  </review-thread-collapsible>
+
+  <!-- 3. Bare login with NO [bot] suffix and no /apps/ link — "Bot" is a separate
+          Label badge. Signals 1 and 2 both miss this, which would silently
+          classify it as human. Confirmed real: `edited by github-actions Bot`. -->
+  <review-thread-collapsible class="js-comment-container js-resolvable-timeline-thread-container" data-resolved="false">
+    <div class="js-comments-holder">
+      <div class="js-comment review-comment">
+        <a class="author Link--primary text-bold" data-hovercard-type="user" href="/github-actions">github-actions</a>
+        <span class="Label Label--secondary">Bot</span>
+        <p>Coverage dropped below threshold.</p>
+      </div>
+    </div>
+    <button type="submit" class="Button--secondary Button--medium Button">Resolve conversation</button>
+  </review-thread-collapsible>
+
+  <!-- 4. No data-resolved attribute at all: absent must mean unresolved, never
+          resolved, or we under-report. Author known only from the /in/ avatar,
+          in the real timeline's markup — plain `class="avatar"`, no data-testid. -->
+  <review-thread-collapsible class="js-comment-container js-resolvable-timeline-thread-container">
+    <div class="js-comments-holder">
+      <div class="js-comment review-comment">
+        <img src="https://avatars.githubusercontent.com/in/811515?s=48&amp;v=4" alt="@devin-ai-integration" size="24" height="24" width="24" class="avatar mr-2 tmp-mr-2">
+        <p>This changes public API surface.</p>
+      </div>
+    </div>
+    <button type="submit" class="Button--secondary Button--medium Button">Resolve conversation</button>
+  </review-thread-collapsible>
+
+  <!-- Resolved: must not count, even though a bot opened it. -->
+  <review-thread-collapsible class="js-comment-container js-resolvable-timeline-thread-container" data-resolved="true" data-hidden-comment-ids="1">
+    <div class="js-comments-holder">
+      <div class="js-comment review-comment">
+        <a class="author Link--primary text-bold" href="/apps/coderabbitai">coderabbitai</a>
+        <span class="Label Label--secondary">Bot</span>
+        <p>Nit: naming.</p>
+      </div>
+    </div>
+    <button type="submit" class="Button--secondary Button--medium Button">Unresolve conversation</button>
+  </review-thread-collapsible>
+
+  <!-- Unresolved but human-opened: not our business. Note the "Author" Label,
+       which is what keeps the badge signal's /^bot$/i anchoring honest. -->
+  <review-thread-collapsible class="js-comment-container js-resolvable-timeline-thread-container" data-resolved="false">
+    <div class="js-comments-holder">
+      <div class="js-comment review-comment">
+        <a class="author Link--primary text-bold" data-hovercard-type="user" href="/alex-dev">alex-dev</a>
+        <span class="Label ml-1">Author</span>
+        <p>Can you rebase this?</p>
+      </div>
+    </div>
+    <button type="submit" class="Button--secondary Button--medium Button">Resolve conversation</button>
+  </review-thread-collapsible>
+
+</div>

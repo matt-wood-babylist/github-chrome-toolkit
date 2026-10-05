@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Toolbar popup — dev harness</title>
+    <style>
+      body {
+        font: 14px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+        margin: 0;
+        padding: 24px;
+        color-scheme: light dark;
+      }
+      h1 { font-size: 16px; margin: 0 0 4px; }
+      p { margin: 0 0 16px; opacity: 0.7; font-size: 13px; }
+      #frame {
+        border: 1px solid color-mix(in srgb, currentColor 25%, transparent);
+        border-radius: 8px;
+        box-shadow: 0 8px 28px rgba(0, 0, 0, 0.22);
+        display: inline-block;
+        overflow: hidden;
+        /* Chrome sizes the real popup to its content; an iframe will not, so the
+           width is pinned here and the height is generous. */
+        width: 350px;
+        height: 420px;
+      }
+      #frame iframe { width: 100%; height: 100%; border: 0; display: block; }
+      label { font-size: 13px; display: block; margin-bottom: 8px; }
+      input[type="text"] { width: 420px; font: inherit; padding: 4px 6px; }
+      #state { font: 12px/1.5 ui-monospace, SFMono-Regular, Menlo, monospace; white-space: pre-wrap; }
+    </style>
+  </head>
+  <body>
+    <h1>Toolbar popup — dev harness</h1>
+    <p>
+      Runs popup.html against a stubbed <code>chrome</code>, so the dropdown and its action
+      editor can be worked on without reloading the unpacked extension. Storage is
+      in-memory per reload; the <code>claude://</code> links are real.
+    </p>
+
+    <label>
+      Active tab URL, as <code>chrome.tabs.query</code> would report it:
+      <input id="url" type="text" value="https://github.com/anthropics/claude-code/pull/1/files" />
+    </label>
+
+    <div id="frame"></div>
+    <p id="state"></p>
+
+    <script>
+      // The stub lives on this page and is inherited by the iframe via its opener
+      // chain — see the assignment in load() below, which is what actually installs
+      // it into the frame's own global.
+      const store = { options: undefined }
+      const listeners = []
+
+      function makeChrome(tabUrl) {
+        return {
+          storage: {
+            sync: {
+              get: async (key) => (store[key] === undefined ? {} : { [key]: store[key] }),
+              set: async (patch) => {
+                Object.assign(store, patch)
+                report()
+                for (const fn of listeners) fn({ options: { newValue: store.options } }, 'sync')
+              },
+            },
+            onChanged: { addListener: (fn) => listeners.push(fn) },
+          },
+          tabs: { query: async () => [{ url: tabUrl }] },
+          runtime: { openOptionsPage: () => alert('chrome.runtime.openOptionsPage()') },
+        }
+      }
+
+      function report() {
+        document.getElementById('state').textContent =
+          'chrome.storage.sync = ' + JSON.stringify(store, null, 2)
+      }
+
+      function load() {
+        const frame = document.createElement('iframe')
+        document.getElementById('frame').replaceChildren(frame)
+        // Install the stub into the frame's global before its script runs. Writing to
+        // the fresh about:blank document is what makes that ordering guaranteed.
+        frame.contentWindow.chrome = makeChrome(document.getElementById('url').value)
+        frame.contentDocument.open()
+        frame.contentDocument.write(
+          '<base href="../">' +
+            document.getElementById('popup-src').textContent,
+        )
+        frame.contentDocument.close()
+      }
+
+      document.getElementById('url').addEventListener('change', load)
+      report()
+    </script>
+
+    <!-- Fetched rather than inlined at build time, so editing popup/index.html and
+         reloading is enough. -->
+    <script type="text/plain" id="popup-src"></script>
+    <script>
+      fetch('../popup.html')
+        .then((r) => r.text())
+        .then((html) => {
+          document.getElementById('popup-src').textContent = html
+          load()
+        })
+    </script>
+  </body>
+</html>

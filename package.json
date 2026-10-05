@@ -1,0 +1,23 @@
+{
+  "name": "github-pending-checks-banner",
+  "version": "0.1.0",
+  "private": true,
+  "description": "Chrome extension: GitHub PR banner for pending checks and unresolved conversations, a review-request guard, and Claude Code session actions.",
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "watch": "node scripts/build.mjs --watch",
+    "package": "node scripts/build.mjs --release",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@types/chrome": "^0.2.5",
+    "@types/node": "^26.1.2",
+    "esbuild": "^0.28.1",
+    "jsdom": "^29.1.1",
+    "typescript": "^7.0.2",
+    "vitest": "^4.1.10"
+  }
+}
