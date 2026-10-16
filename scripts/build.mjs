@@ -75,7 +75,7 @@ if (watch) {
   if (release) {
     const { version } = JSON.parse(await readFile(resolve(root, 'manifest.json'), 'utf8'))
     const out = resolve(root, 'release')
-    const zip = resolve(out, `github-pending-checks-banner-${version}.zip`)
+    const zip = resolve(out, `github-pr-helper-${version}.zip`)
     await mkdir(out, { recursive: true })
     await rm(zip, { force: true })
     // The system `zip` (macOS and Linux). -X drops extra file attributes so the
