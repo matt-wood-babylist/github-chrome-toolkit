@@ -1,4 +1,4 @@
-# GitHub Pending Checks Banner
+# GitHub PR Helper
 
 A Chrome extension for GitHub pull requests. It does three things:
 
@@ -16,7 +16,7 @@ works on private repos.
 
 ## Install
 
-1. Download `github-pending-checks-banner-<version>.zip` from the
+1. Download `github-pr-helper-<version>.zip` from the
    [latest release](https://github.com/matt-wood-babylist/github-chrome-toolkit/releases/latest).
    To build it yourself instead, run `npm install && npm run package`, which writes it to
    `release/`.

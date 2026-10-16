@@ -1,5 +1,5 @@
 {
-  "name": "github-pending-checks-banner",
+  "name": "github-pr-helper",
   "version": "0.1.0",
   "private": true,
   "description": "Chrome extension: GitHub PR banner for pending checks and unresolved conversations, a review-request guard, and Claude Code session actions.",
